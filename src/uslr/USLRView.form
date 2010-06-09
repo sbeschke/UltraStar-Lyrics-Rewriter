@@ -15,7 +15,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jTabbedPane1" alignment="1" pref="358" max="32767" attributes="0"/>
+              <Component id="jTabbedPane1" alignment="1" pref="347" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -42,19 +42,15 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="loadLyricsFileButton" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jScrollPane2" pref="453" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="currentLineField" pref="452" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="lyricsFileField" pref="452" max="32767" attributes="0"/>
+                                  <Component id="currentLineField" pref="453" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="120" max="-2" attributes="0"/>
@@ -64,11 +60,12 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="nextSyllableButton" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="getCharButton" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="skipCharButton" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="239" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -79,23 +76,21 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="loadLyricsFileButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                           <Component id="currentLineField" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="editLyricsField" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="prevSyllableButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="nextSyllableButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="getCharButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="skipCharButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jScrollPane2" pref="173" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lyricsFileField" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="84" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -113,21 +108,6 @@
                     <Property name="name" type="java.lang.String" value="currentLineField" noResource="true"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="lyricsFileField">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="lyricsFileField.text"/>
-                    <Property name="name" type="java.lang.String" value="lyricsFileField" noResource="true"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JButton" name="loadLyricsFileButton">
-                  <Properties>
-                    <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                      <action class="uslr.USLRView" id="loadLyricsFileAction" methodName="loadLyricsFileAction"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" resourceKey="loadLyricsFileButton.text"/>
-                    <Property name="name" type="java.lang.String" value="loadLyricsFileButton" noResource="true"/>
-                  </Properties>
-                </Component>
                 <Component class="javax.swing.JButton" name="prevSyllableButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" resourceKey="prevSyllableButton.text"/>
@@ -142,16 +122,41 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="getCharButton">
                   <Properties>
+                    <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                      <action class="uslr.USLRView" id="lyricsPaneGetChar" methodName="lyricsPaneGetChar"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" resourceKey="getCharButton.text"/>
                     <Property name="name" type="java.lang.String" value="getCharButton" noResource="true"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="skipCharButton">
                   <Properties>
+                    <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                      <action class="uslr.USLRView" id="lyricsPaneSkipChar" methodName="lyricsPaneSkipChar"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" resourceKey="skipCharButton.text"/>
                     <Property name="name" type="java.lang.String" value="skipCharButton" noResource="true"/>
                   </Properties>
                 </Component>
+                <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+                  <Properties>
+                    <Property name="name" type="java.lang.String" value="jScrollPane2" noResource="true"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                  </AuxValues>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                  <SubComponents>
+                    <Component class="javax.swing.JTextArea" name="newLyricsTextArea">
+                      <Properties>
+                        <Property name="columns" type="int" value="20"/>
+                        <Property name="rows" type="int" value="5"/>
+                        <Property name="name" type="java.lang.String" value="newLyricsTextArea" noResource="true"/>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="logPanel">
@@ -277,7 +282,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="statusMessageLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="307" max="32767" attributes="0"/>
+                  <EmptySpace pref="291" max="32767" attributes="0"/>
                   <Component id="progressBar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="statusAnimationLabel" min="-2" max="-2" attributes="0"/>

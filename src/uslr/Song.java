@@ -62,7 +62,7 @@ public class Song {
                         String syllPrefix = m.group(1);
                         String syllLyrics = m.group(2);
                         System.out.println("match: " + syllLyrics);
-                        currentLine.addSyllable(new LyricsSyllable(syllPrefix, syllLyrics));
+                        currentLine.addSyllable(new LyricsSyllable(currentLine, syllPrefix, syllLyrics));
                     }
                     else {
                         System.out.println("NO MATCH");
@@ -89,6 +89,13 @@ public class Song {
 
     public ArrayList<LyricsLine> getLyrics() {
         return lyrics;
+    }
+
+    public LyricsSyllable getFirstSyllable() throws Exception {
+        if(lyrics.size() < 1) {
+            throw new Exception("Get first syllable of empty lyrics");
+        }
+        return lyrics.get(0).getFirstSyllable();
     }
 
     private ArrayList<MetaDataLine> metadata;

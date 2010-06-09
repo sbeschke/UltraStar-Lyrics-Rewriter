@@ -21,6 +21,7 @@ import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.text.BadLocationException;
 
 /**
  * The application's main frame.
@@ -111,12 +112,12 @@ public class USLRView extends FrameView {
         lyricsPanel = new javax.swing.JPanel();
         editLyricsField = new javax.swing.JTextField();
         currentLineField = new javax.swing.JFormattedTextField();
-        lyricsFileField = new javax.swing.JTextField();
-        loadLyricsFileButton = new javax.swing.JButton();
         prevSyllableButton = new javax.swing.JButton();
         nextSyllableButton = new javax.swing.JButton();
         getCharButton = new javax.swing.JButton();
         skipCharButton = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        newLyricsTextArea = new javax.swing.JTextArea();
         logPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         logTextArea = new javax.swing.JTextArea();
@@ -144,42 +145,41 @@ public class USLRView extends FrameView {
         currentLineField.setText(resourceMap.getString("currentLineField.text")); // NOI18N
         currentLineField.setName("currentLineField"); // NOI18N
 
-        lyricsFileField.setText(resourceMap.getString("lyricsFileField.text")); // NOI18N
-        lyricsFileField.setName("lyricsFileField"); // NOI18N
-
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(uslr.USLRApp.class).getContext().getActionMap(USLRView.class, this);
-        loadLyricsFileButton.setAction(actionMap.get("loadLyricsFileAction")); // NOI18N
-        loadLyricsFileButton.setText(resourceMap.getString("loadLyricsFileButton.text")); // NOI18N
-        loadLyricsFileButton.setName("loadLyricsFileButton"); // NOI18N
-
         prevSyllableButton.setText(resourceMap.getString("prevSyllableButton.text")); // NOI18N
         prevSyllableButton.setName("prevSyllableButton"); // NOI18N
 
         nextSyllableButton.setText(resourceMap.getString("nextSyllableButton.text")); // NOI18N
         nextSyllableButton.setName("nextSyllableButton"); // NOI18N
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(uslr.USLRApp.class).getContext().getActionMap(USLRView.class, this);
+        getCharButton.setAction(actionMap.get("lyricsPaneGetChar")); // NOI18N
         getCharButton.setText(resourceMap.getString("getCharButton.text")); // NOI18N
         getCharButton.setName("getCharButton"); // NOI18N
 
+        skipCharButton.setAction(actionMap.get("lyricsPaneSkipChar")); // NOI18N
         skipCharButton.setText(resourceMap.getString("skipCharButton.text")); // NOI18N
         skipCharButton.setName("skipCharButton"); // NOI18N
+
+        jScrollPane2.setName("jScrollPane2"); // NOI18N
+
+        newLyricsTextArea.setColumns(20);
+        newLyricsTextArea.setRows(5);
+        newLyricsTextArea.setName("newLyricsTextArea"); // NOI18N
+        jScrollPane2.setViewportView(newLyricsTextArea);
 
         javax.swing.GroupLayout lyricsPanelLayout = new javax.swing.GroupLayout(lyricsPanel);
         lyricsPanel.setLayout(lyricsPanelLayout);
         lyricsPanelLayout.setHorizontalGroup(
             lyricsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(lyricsPanelLayout.createSequentialGroup()
-                .addGroup(lyricsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, lyricsPanelLayout.createSequentialGroup()
+                .addGroup(lyricsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, lyricsPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE))
                     .addGroup(lyricsPanelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(loadLyricsFileButton))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, lyricsPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(currentLineField, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE))
-                    .addGroup(lyricsPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lyricsFileField, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE))
-                    .addGroup(lyricsPanelLayout.createSequentialGroup()
+                        .addComponent(currentLineField, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, lyricsPanelLayout.createSequentialGroup()
                         .addGap(120, 120, 120)
                         .addComponent(prevSyllableButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -190,28 +190,27 @@ public class USLRView extends FrameView {
                         .addContainerGap()
                         .addComponent(getCharButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(skipCharButton)))
+                        .addComponent(skipCharButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 239, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         lyricsPanelLayout.setVerticalGroup(
             lyricsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(lyricsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(loadLyricsFileButton)
-                .addGap(17, 17, 17)
                 .addComponent(currentLineField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(lyricsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(editLyricsField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(prevSyllableButton)
                     .addComponent(nextSyllableButton))
-                .addGap(38, 38, 38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(lyricsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(getCharButton)
                     .addComponent(skipCharButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lyricsFileField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab(resourceMap.getString("lyricsPanel.TabConstraints.tabTitle"), lyricsPanel); // NOI18N
@@ -238,7 +237,7 @@ public class USLRView extends FrameView {
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
         );
 
         menuBar.setName("menuBar"); // NOI18N
@@ -282,7 +281,7 @@ public class USLRView extends FrameView {
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(statusMessageLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 307, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 291, Short.MAX_VALUE)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(statusAnimationLabel)
@@ -352,6 +351,8 @@ public class USLRView extends FrameView {
             loadedSong.load(reader);
 
             strm.close();
+
+            setCurrentSyllable(loadedSong.getFirstSyllable());
         }
         catch(Exception x) {
             log(x.getLocalizedMessage());
@@ -385,11 +386,37 @@ public class USLRView extends FrameView {
             }
             strm.close();
 
-            lyricsFileField.setText(lyrics);
+            newLyricsTextArea.setText(lyrics);
         }
         catch(Exception x) {
             log(x.getLocalizedMessage());
         }
+    }
+
+    public void setCurrentSyllable(LyricsSyllable syllable) {
+        this.currentSyllable = syllable;
+        editLyricsField.setText("");
+        currentLineField.setText(syllable.getLine().getLyrics(syllable));
+    }
+
+    @Action
+    public void lyricsPaneGetChar() {
+        if(newLyricsTextArea.getText().length() < 1) return;
+        try {
+            String gotten = newLyricsTextArea.getText(0, 1);
+            editLyricsField.setText(
+                    editLyricsField.getText() + gotten);
+            newLyricsTextArea.setText(newLyricsTextArea.getText().substring(1).trim());
+        }
+        catch(BadLocationException x) {
+
+        }
+    }
+
+    @Action
+    public void lyricsPaneSkipChar() {
+        if(newLyricsTextArea.getText().length() < 1) return;
+        newLyricsTextArea.setText(newLyricsTextArea.getText().substring(1).trim());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -397,14 +424,14 @@ public class USLRView extends FrameView {
     private javax.swing.JTextField editLyricsField;
     private javax.swing.JButton getCharButton;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JButton loadLyricsFileButton;
     private javax.swing.JPanel logPanel;
     private javax.swing.JTextArea logTextArea;
-    private javax.swing.JTextField lyricsFileField;
     private javax.swing.JPanel lyricsPanel;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JTextArea newLyricsTextArea;
     private javax.swing.JButton nextSyllableButton;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JButton prevSyllableButton;
@@ -424,7 +451,9 @@ public class USLRView extends FrameView {
     private JDialog aboutBox;
 
     private final byte[] utf8Bom = {(byte)0xef, (byte)0xbb, (byte)0xbf};
-    private final JFileChooser fileChooser = new JFileChooser("C:/Program Files/Ultrastar Deluxe/songs/Korean");
+    private final JFileChooser fileChooser = new JFileChooser("/media/Volume/ultrastar/Ultrastar Deluxe/songs/Korean");
     private File loadedFile = null;
     private Song loadedSong = null;
+
+    private LyricsSyllable currentSyllable = null;
 }
