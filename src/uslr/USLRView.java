@@ -12,9 +12,12 @@ import org.jdesktop.application.TaskMonitor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import javax.swing.Timer;
 import javax.swing.Icon;
@@ -124,6 +127,7 @@ public class USLRView extends FrameView {
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
@@ -145,13 +149,15 @@ public class USLRView extends FrameView {
         currentLineField.setText(resourceMap.getString("currentLineField.text")); // NOI18N
         currentLineField.setName("currentLineField"); // NOI18N
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(uslr.USLRApp.class).getContext().getActionMap(USLRView.class, this);
+        prevSyllableButton.setAction(actionMap.get("lyricsPanePreviousSyllable")); // NOI18N
         prevSyllableButton.setText(resourceMap.getString("prevSyllableButton.text")); // NOI18N
         prevSyllableButton.setName("prevSyllableButton"); // NOI18N
 
+        nextSyllableButton.setAction(actionMap.get("lyricsPaneNextSyllable")); // NOI18N
         nextSyllableButton.setText(resourceMap.getString("nextSyllableButton.text")); // NOI18N
         nextSyllableButton.setName("nextSyllableButton"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(uslr.USLRApp.class).getContext().getActionMap(USLRView.class, this);
         getCharButton.setAction(actionMap.get("lyricsPaneGetChar")); // NOI18N
         getCharButton.setText(resourceMap.getString("getCharButton.text")); // NOI18N
         getCharButton.setName("getCharButton"); // NOI18N
@@ -249,6 +255,11 @@ public class USLRView extends FrameView {
         openMenuItem.setText(resourceMap.getString("openMenuItem.text")); // NOI18N
         openMenuItem.setName("openMenuItem"); // NOI18N
         fileMenu.add(openMenuItem);
+
+        jMenuItem1.setAction(actionMap.get("saveSongAction")); // NOI18N
+        jMenuItem1.setText(resourceMap.getString("jMenuItem1.text")); // NOI18N
+        jMenuItem1.setName("jMenuItem1"); // NOI18N
+        fileMenu.add(jMenuItem1);
 
         exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
         exitMenuItem.setName("exitMenuItem"); // NOI18N
@@ -389,7 +400,7 @@ public class USLRView extends FrameView {
             newLyricsTextArea.setText(lyrics);
         }
         catch(Exception x) {
-            log(x.getLocalizedMessage());
+            log("Exception: " + x.getLocalizedMessage());
         }
     }
 
@@ -397,6 +408,9 @@ public class USLRView extends FrameView {
         this.currentSyllable = syllable;
         editLyricsField.setText("");
         currentLineField.setText(syllable.getLine().getLyrics(syllable));
+        editLyricsField.setText(syllable.getLyrics());
+        editLyricsField.selectAll();
+        editLyricsField.requestFocusInWindow();
     }
 
     @Action
@@ -419,10 +433,56 @@ public class USLRView extends FrameView {
         newLyricsTextArea.setText(newLyricsTextArea.getText().substring(1).trim());
     }
 
+    @Action
+    public void lyricsPaneNextSyllable() {
+        if(currentSyllable == null) return;
+        try {
+            currentSyllable.setLyrics(editLyricsField.getText());
+            setCurrentSyllable(loadedSong.getNextSyllable(currentSyllable));
+        }
+        catch(Exception x) {
+            log("Exception:" + x.getMessage());
+        }
+    }
+
+    @Action
+    public void lyricsPanePreviousSyllable() {
+        if(currentSyllable == null) return;
+        try {
+            currentSyllable.setLyrics(editLyricsField.getText());
+            setCurrentSyllable(loadedSong.getPreviousSyllable(currentSyllable));
+        }
+        catch(Exception x) {
+            log("Exception:" + x.getMessage());
+        }
+    }
+
+    @Action
+    public void saveSongAction() {
+        if(loadedSong == null) return;
+        JFrame mainFrame = USLRApp.getApplication().getMainFrame();
+        int returnVal = fileChooser.showSaveDialog(mainFrame);
+        File targetFile = fileChooser.getSelectedFile();
+        try {
+            log("Saving song as: " + targetFile.getCanonicalPath());
+            FileOutputStream fos = new FileOutputStream(targetFile);
+            OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
+            BufferedWriter bw = new BufferedWriter(osw);
+            loadedSong.save(bw);
+            bw.close();
+            osw.close();
+            fos.close();
+        }
+        catch(Exception x) {
+            log("Error while saving: " + x.getLocalizedMessage());
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField currentLineField;
     private javax.swing.JTextField editLyricsField;
     private javax.swing.JButton getCharButton;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
@@ -451,7 +511,7 @@ public class USLRView extends FrameView {
     private JDialog aboutBox;
 
     private final byte[] utf8Bom = {(byte)0xef, (byte)0xbb, (byte)0xbf};
-    private final JFileChooser fileChooser = new JFileChooser("/media/Volume/ultrastar/Ultrastar Deluxe/songs/Korean");
+    private final JFileChooser fileChooser = new JFileChooser("/home/sebastian/arbeit/ussongs/");
     private File loadedFile = null;
     private Song loadedSong = null;
 

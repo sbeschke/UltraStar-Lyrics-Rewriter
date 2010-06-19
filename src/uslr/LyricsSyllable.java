@@ -5,6 +5,9 @@
 
 package uslr;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 /**
  *
  * @author Sebastian
@@ -34,6 +37,10 @@ public class LyricsSyllable {
 
     public void setPrefix(String prefix) {
         this.prefix = prefix;
+    }
+
+    public void write(BufferedWriter writer) throws IOException {
+        writer.write(prefix + lyrics + "\n");
     }
 
     private LyricsLine line; /// The line this syllable belongs to.

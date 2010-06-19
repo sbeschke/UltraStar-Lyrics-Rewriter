@@ -6,7 +6,10 @@
 package uslr;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,7 +27,7 @@ public class Song {
         metadata = new ArrayList<MetaDataLine>();
 
         // Regex to extract tag and value of a metadata item
-        Pattern metadataPattern = Pattern.compile("^#(\\p{javaUpperCase}+):(.*)$");
+        Pattern metadataPattern = Pattern.compile("^#(.+):(.*)$");
         // Regex to separate a line in the input file into prefix and lyrics
         Pattern syllablePattern = Pattern.compile("(^. \\d+ -?\\d+ -?\\d+ )(.*)$");
         LyricsLine currentLine = new LyricsLine();
@@ -49,6 +52,7 @@ public class Song {
                     break;
                 }
                 case '-': // line break
+                    currentLine.setLineBreakMarker(syllStr);
                     this.addLine(currentLine);
                     currentLine = new LyricsLine();
                     break;
@@ -70,12 +74,23 @@ public class Song {
                     break;
                 }
                 case 'E': // end of song
+                    currentLine.setLineBreakMarker(syllStr);
                     endReached = true;
                     break;
             }
 
             syllStr = file.readLine();
             if(syllStr == null) endReached = true;
+        }
+        this.addLine(currentLine);
+    }
+
+    public void save(BufferedWriter writer) throws IOException {
+        for(Iterator<MetaDataLine> i = metadata.iterator(); i.hasNext();) {
+            i.next().write(writer);
+        }
+        for(Iterator<LyricsLine> i = lyrics.iterator(); i.hasNext();) {
+            i.next().write(writer);
         }
     }
 
@@ -96,6 +111,40 @@ public class Song {
             throw new Exception("Get first syllable of empty lyrics");
         }
         return lyrics.get(0).getFirstSyllable();
+    }
+
+    public LyricsSyllable getPreviousSyllable(LyricsSyllable syl) throws Exception {
+        LyricsLine line = syl.getLine();
+        LyricsSyllable newsyl = line.getPreviousSyllable(syl);
+        if(newsyl == null) {
+            int lineIdx = lyrics.indexOf(line) - 1;
+            if(lineIdx < 0) {
+                return syl;
+            }
+            else {
+                return lyrics.get(lineIdx).getLastSyllable();
+            }
+        }
+        else {
+            return newsyl;
+        }
+    }
+
+    public LyricsSyllable getNextSyllable(LyricsSyllable syl) throws Exception {
+        LyricsLine line = syl.getLine();
+        LyricsSyllable newsyl = line.getNextSyllable(syl);
+        if(newsyl == null) {
+            int lineIdx = lyrics.indexOf(line) + 1;
+            if(lineIdx >= lyrics.size()) {
+                return syl;
+            }
+            else {
+                return lyrics.get(lineIdx).getFirstSyllable();
+            }
+        }
+        else {
+            return newsyl;
+        }
     }
 
     private ArrayList<MetaDataLine> metadata;

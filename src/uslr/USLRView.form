@@ -110,12 +110,18 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="prevSyllableButton">
                   <Properties>
+                    <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                      <action class="uslr.USLRView" id="lyricsPanePreviousSyllable" methodName="lyricsPanePreviousSyllable"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" resourceKey="prevSyllableButton.text"/>
                     <Property name="name" type="java.lang.String" value="prevSyllableButton" noResource="true"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="nextSyllableButton">
                   <Properties>
+                    <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                      <action class="uslr.USLRView" id="lyricsPaneNextSyllable" methodName="lyricsPaneNextSyllable"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" resourceKey="nextSyllableButton.text"/>
                     <Property name="name" type="java.lang.String" value="nextSyllableButton" noResource="true"/>
                   </Properties>
@@ -229,6 +235,15 @@
                 </Property>
                 <Property name="text" type="java.lang.String" resourceKey="openMenuItem.text"/>
                 <Property name="name" type="java.lang.String" value="openMenuItem" noResource="true"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="uslr.USLRView" id="saveSongAction" methodName="saveSongAction"/>
+                </Property>
+                <Property name="text" type="java.lang.String" resourceKey="jMenuItem1.text"/>
+                <Property name="name" type="java.lang.String" value="jMenuItem1" noResource="true"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="exitMenuItem">

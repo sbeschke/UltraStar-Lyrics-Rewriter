@@ -5,6 +5,9 @@
 
 package uslr;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 /**
  *
  * @author Sebastian
@@ -32,7 +35,9 @@ public class MetaDataLine {
         this.value = value;
     }
     
-    
+    public void write(BufferedWriter writer) throws IOException {
+        writer.write("#" + tag + ":" + value + "\n");
+    }
 
     private String tag;
     private String value;
