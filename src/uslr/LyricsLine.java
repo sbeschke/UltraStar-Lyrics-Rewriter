@@ -36,11 +36,25 @@ public class LyricsLine {
         Iterator<LyricsSyllable> i = syllables.iterator();
         while(i.hasNext()) {
             LyricsSyllable syl = i.next();
-            if(syl == emphasize) lyrics += "→";
+            if(syl == emphasize) lyrics += "<font bgcolor='FF8080'>";
             lyrics += syl.getLyrics();
-            if(syl == emphasize) lyrics += "←";
+            if(syl == emphasize) lyrics += "</font>";
         }
         return lyrics;
+    }
+
+    public int getCharIndex(LyricsSyllable syllable) {
+        int result = 0;
+        Iterator<LyricsSyllable> i = syllables.iterator();
+        while(i.hasNext()) {
+            LyricsSyllable syl = i.next();
+            if(syl == syllable) {
+                break;
+            }
+            result += syl.getLyrics().length();
+        }
+        System.out.println(result);
+        return result;
     }
 
     public LyricsSyllable getFirstSyllable() throws Exception {

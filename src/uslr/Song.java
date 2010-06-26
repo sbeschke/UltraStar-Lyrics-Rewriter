@@ -113,6 +113,26 @@ public class Song {
         return lyrics.get(0).getFirstSyllable();
     }
 
+    public LyricsLine getPreviousLine(LyricsLine line) {
+        int lineIdx = lyrics.indexOf(line) - 1;
+        if(lineIdx < 0) {
+            return null;
+        }
+        else {
+            return lyrics.get(lineIdx);
+        }
+    }
+
+    public LyricsLine getNextLine(LyricsLine line) {
+        int lineIdx = lyrics.indexOf(line) + 1;
+        if(lineIdx >= lyrics.size()) {
+            return null;
+        }
+        else {
+            return lyrics.get(lineIdx);
+        }
+    }
+
     public LyricsSyllable getPreviousSyllable(LyricsSyllable syl) throws Exception {
         LyricsLine line = syl.getLine();
         LyricsSyllable newsyl = line.getPreviousSyllable(syl);
