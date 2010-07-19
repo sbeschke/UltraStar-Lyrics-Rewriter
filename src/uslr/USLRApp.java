@@ -20,7 +20,8 @@ public class USLRApp extends SingleFrameApplication {
      * At startup create and show the main frame of the application.
      */
     @Override protected void startup() {
-        show(new USLRView(this));
+        view = new USLRView(this);
+        show(view);
     }
 
     /**
@@ -45,4 +46,10 @@ public class USLRApp extends SingleFrameApplication {
     public static void main(String[] args) {
         launch(USLRApp.class, args);
     }
+
+    public void log(String text) {
+        view.log(text);
+    }
+
+    private USLRView view;
 }

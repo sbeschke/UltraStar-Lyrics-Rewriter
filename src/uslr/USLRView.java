@@ -45,12 +45,12 @@ public class USLRView extends FrameView {
             if(e.isControlDown()) {
                 switch(e.getKeyCode()) {
                     // Get char
-                    case KeyEvent.VK_Q:
+                    case KeyEvent.VK_Z:
                         view.lyricsPaneGetChar();
                         e.consume();
                         break;
                     // Skip char
-                    case KeyEvent.VK_W:
+                    case KeyEvent.VK_X:
                         view.lyricsPaneSkipChar();
                         e.consume();
                         break;
@@ -195,6 +195,8 @@ public class USLRView extends FrameView {
         openMenuItem = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
+        toolsMenu = new javax.swing.JMenu();
+        createSongListItem = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         statusPanel = new javax.swing.JPanel();
@@ -343,6 +345,16 @@ public class USLRView extends FrameView {
 
         menuBar.add(fileMenu);
 
+        toolsMenu.setText(resourceMap.getString("toolsMenu.text")); // NOI18N
+        toolsMenu.setName("toolsMenu"); // NOI18N
+
+        createSongListItem.setAction(actionMap.get("createSongList")); // NOI18N
+        createSongListItem.setText(resourceMap.getString("createSongListItem.text")); // NOI18N
+        createSongListItem.setName("createSongListItem"); // NOI18N
+        toolsMenu.add(createSongListItem);
+
+        menuBar.add(toolsMenu);
+
         helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
         helpMenu.setName("helpMenu"); // NOI18N
 
@@ -394,6 +406,9 @@ public class USLRView extends FrameView {
     public void openSongAction() {
         JFrame mainFrame = USLRApp.getApplication().getMainFrame();
         int returnVal = fileChooser.showOpenDialog(mainFrame);
+        if(returnVal != JFileChooser.APPROVE_OPTION)
+            return;
+        
         loadedFile = fileChooser.getSelectedFile();
         try {
             log("Opening song: " + loadedFile.getCanonicalPath());
@@ -410,35 +425,7 @@ public class USLRView extends FrameView {
 
     public void loadSong() {
         try {
-            String cs = Charset.defaultCharset().name();
-            FileInputStream strm = new FileInputStream(loadedFile);
-            byte[] bomTest = new byte[utf8Bom.length];
-            strm.read(bomTest);
-            boolean isUtf8 = true;
-            for(int i = 0; i < utf8Bom.length; i++) {
-                if(utf8Bom[i] != bomTest[i]) {
-                    isUtf8 = false;
-                }
-            }
-            if(!isUtf8) {
-                log("Reading using the default encoding: " + cs);
-                // Re-open the file to start from position 0
-                strm.close();
-                strm = new FileInputStream(loadedFile);
-            }
-            else {
-                log("Reading as UTF-8");
-                cs = "UTF-8";
-            }
-
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(strm, cs));
-
-            loadedSong = new Song();
-            loadedSong.load(reader);
-
-            strm.close();
-
+            loadedSong = new Song(loadedFile);
             setCurrentSyllable(loadedSong.getFirstSyllable());
         }
         catch(Exception x) {
@@ -567,6 +554,8 @@ public class USLRView extends FrameView {
         if(loadedSong == null) return;
         JFrame mainFrame = USLRApp.getApplication().getMainFrame();
         int returnVal = fileChooser.showSaveDialog(mainFrame);
+        if(returnVal != JFileChooser.APPROVE_OPTION)
+            return;
         File targetFile = fileChooser.getSelectedFile();
         try {
             log("Saving song as: " + targetFile.getCanonicalPath());
@@ -613,7 +602,14 @@ public class USLRView extends FrameView {
         }
     }
 
+    @Action
+    public void createSongList() {
+        SongListDialog dialog = new SongListDialog(this.getFrame(), false);
+        dialog.setVisible(true);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem createSongListItem;
     private javax.swing.JEditorPane currentLineField;
     private javax.swing.JTextField editLyricsField;
     private javax.swing.JButton getCharButton;
@@ -637,6 +633,7 @@ public class USLRView extends FrameView {
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
+    private javax.swing.JMenu toolsMenu;
     // End of variables declaration//GEN-END:variables
 
     private final Timer messageTimer;
@@ -647,8 +644,7 @@ public class USLRView extends FrameView {
 
     private JDialog aboutBox;
 
-    private final byte[] utf8Bom = {(byte)0xef, (byte)0xbb, (byte)0xbf};
-    private final JFileChooser fileChooser = new JFileChooser("/home/sebastian/arbeit/ussongs/");
+    private final JFileChooser fileChooser = new JFileChooser("/home/sebastian/arbeit/ultrastar/");
     private File loadedFile = null;
     private Song loadedSong = null;
 

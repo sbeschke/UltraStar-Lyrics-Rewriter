@@ -7,7 +7,11 @@ package uslr;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.regex.Matcher;
@@ -22,32 +26,65 @@ public class Song {
     public Song() {
     }
 
-    public void load(BufferedReader file) throws Exception {
+    public Song(File file) throws Exception {
+        load(file);
+    }
+
+    public void load(File file)throws Exception {
+        String cs = "ISO-8859-1";
+        FileInputStream strm = new FileInputStream(file);
+        byte[] bomTest = new byte[utf8Bom.length];
+        strm.read(bomTest);
+        boolean isUtf8 = true;
+        for(int i = 0; i < utf8Bom.length; i++) {
+            if(utf8Bom[i] != bomTest[i]) {
+                isUtf8 = false;
+            }
+        }
+        if(!isUtf8) {
+            // Re-open the file to restart reading
+            strm.close();
+            strm = new FileInputStream(file);
+        }
+        else {
+            // use UTF-8 encoding
+            cs = "UTF-8";
+        }
+
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(strm, cs));
+
+        load(reader, file.getPath());
+
+        strm.close();
+    }
+
+    public void load(BufferedReader reader, String fileName) throws Exception {
         lyrics = new ArrayList<LyricsLine>();
         metadata = new ArrayList<MetaDataLine>();
 
         // Regex to extract tag and value of a metadata item
         Pattern metadataPattern = Pattern.compile("^#(.+):(.*)$");
         // Regex to separate a line in the input file into prefix and lyrics
-        Pattern syllablePattern = Pattern.compile("(^. \\d+ -?\\d+ -?\\d+ )(.*)$");
+        Pattern syllablePattern = Pattern.compile("(^. -?\\d+ -?\\d+ -?\\d+)( (.*))?$");
         LyricsLine currentLine = new LyricsLine();
 
-        String syllStr = file.readLine();
+        int lineNumber = 1;
+        String syllStr = reader.readLine();
         boolean endReached = (syllStr == null);
         while(!endReached) {
             char firstChar = syllStr.charAt(0);
             switch(firstChar) {
                 case '#': { // metadata
                     Matcher m = metadataPattern.matcher(syllStr);
-                    System.out.println(syllStr);
                     if(m.matches()) {
                         String tag = m.group(1);
                         String value = m.group(2);
-                        System.out.println("match: " + tag + ":" + value);
                         this.addMetaData(new MetaDataLine(tag, value));
                     }
                     else {
-                        System.out.println("NO MATCH");
+                        throw new Exception("Unable to process metadata in line "
+                                + lineNumber + " of " + fileName);
                     }
                     break;
                 }
@@ -61,15 +98,14 @@ public class Song {
                 case 'F': { // freestyle note
                     // Separate the line into prefix and lyrics by way of a regular expression
                     Matcher m = syllablePattern.matcher(syllStr);
-                    System.out.println(syllStr);
                     if(m.matches()) {
                         String syllPrefix = m.group(1);
-                        String syllLyrics = m.group(2);
-                        System.out.println("match: " + syllLyrics);
+                        String syllLyrics = m.group(3);
                         currentLine.addSyllable(new LyricsSyllable(currentLine, syllPrefix, syllLyrics));
                     }
                     else {
-                        System.out.println("NO MATCH");
+                        throw new Exception("Unable to process lyrics in line "
+                                + lineNumber + " of " + fileName);
                     }
                     break;
                 }
@@ -79,7 +115,8 @@ public class Song {
                     break;
             }
 
-            syllStr = file.readLine();
+            syllStr = reader.readLine();
+            lineNumber++;
             if(syllStr == null) endReached = true;
         }
         this.addLine(currentLine);
@@ -99,6 +136,16 @@ public class Song {
     }
 
     public void addMetaData(MetaDataLine line) {
+        // todo hacky, this goofy data caching has to go
+        if(line.getTag().equals("ARTIST")) {
+            this.setArtist(line.getValue());
+        }
+        if(line.getTag().equals("TITLE")) {
+            this.setTitle(line.getValue());
+        }
+        if(line.getTag().equals("LANGUAGE")) {
+            this.setLanguage(line.getValue());
+        }
         metadata.add(line);
     }
 
@@ -167,6 +214,45 @@ public class Song {
         }
     }
 
+    public String getArtist() {
+        return artist;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    /**
+     * @param artist the artist to set
+     */
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
+
+    /**
+     * @param title the title to set
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    /**
+     * @param language the language to set
+     */
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    private final byte[] utf8Bom = {(byte)0xef, (byte)0xbb, (byte)0xbf};
     private ArrayList<MetaDataLine> metadata;
     private ArrayList<LyricsLine> lyrics;
+
+    // todo cached data - hacky, replace with proper metadata implementation
+    private String artist;
+    private String title;
+    private String language;
 }
