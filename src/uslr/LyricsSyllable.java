@@ -40,7 +40,7 @@ public class LyricsSyllable {
     }
 
     public void write(BufferedWriter writer) throws IOException {
-        writer.write(prefix + lyrics + "\n");
+        writer.write(prefix + " " + lyrics + "\n");
     }
 
     private LyricsLine line; /// The line this syllable belongs to.

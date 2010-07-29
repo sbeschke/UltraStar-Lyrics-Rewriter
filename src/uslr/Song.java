@@ -9,9 +9,10 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.regex.Matcher;
@@ -31,7 +32,8 @@ public class Song {
     }
 
     public void load(File file)throws Exception {
-        String cs = "ISO-8859-1";
+        String cs = "Cp1252";
+        //String cs = "UTF-8";
         FileInputStream strm = new FileInputStream(file);
         byte[] bomTest = new byte[utf8Bom.length];
         strm.read(bomTest);
@@ -122,13 +124,25 @@ public class Song {
         this.addLine(currentLine);
     }
 
-    public void save(BufferedWriter writer) throws IOException {
+    public void save(File targetFile) throws IOException {
+        FileOutputStream fos = new FileOutputStream(targetFile);
+        fos.write(utf8Bom);
+        fos.flush();
+        OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
+        BufferedWriter bw = new BufferedWriter(osw);
+
+
         for(Iterator<MetaDataLine> i = metadata.iterator(); i.hasNext();) {
-            i.next().write(writer);
+            i.next().write(bw);
         }
         for(Iterator<LyricsLine> i = lyrics.iterator(); i.hasNext();) {
-            i.next().write(writer);
+            i.next().write(bw);
         }
+
+        bw.close();
+        osw.close();
+        fos.close();
+
     }
 
     public void addLine(LyricsLine line) {

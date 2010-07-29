@@ -415,7 +415,7 @@ public class USLRView extends FrameView {
             loadSong();
         }
         catch(Exception x) {
-            log(x.getLocalizedMessage());
+            log(x.getLocalizedMessage() + " in " + loadedFile);
         }
      }
 
@@ -423,14 +423,9 @@ public class USLRView extends FrameView {
         logTextArea.append(text + "\n");
     }
 
-    public void loadSong() {
-        try {
-            loadedSong = new Song(loadedFile);
-            setCurrentSyllable(loadedSong.getFirstSyllable());
-        }
-        catch(Exception x) {
-            log(x.getLocalizedMessage());
-        }
+    public void loadSong() throws Exception {
+        loadedSong = new Song(loadedFile);
+        setCurrentSyllable(loadedSong.getFirstSyllable());
     }
 
     @Action
@@ -559,13 +554,7 @@ public class USLRView extends FrameView {
         File targetFile = fileChooser.getSelectedFile();
         try {
             log("Saving song as: " + targetFile.getCanonicalPath());
-            FileOutputStream fos = new FileOutputStream(targetFile);
-            OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
-            BufferedWriter bw = new BufferedWriter(osw);
-            loadedSong.save(bw);
-            bw.close();
-            osw.close();
-            fos.close();
+            loadedSong.save(targetFile);
         }
         catch(Exception x) {
             log("Error while saving: " + x.getLocalizedMessage());

@@ -110,7 +110,7 @@ public class SongListMaker {
                         songs.add(song);
                     }
                     catch(Exception x) {
-                        USLRApp.getApplication().log(x.getLocalizedMessage());
+                        USLRApp.getApplication().log(x.getLocalizedMessage() + " in " + filename);
                     }
                 }
             }
