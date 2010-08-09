@@ -55,6 +55,10 @@ public class LyricsSyllable {
         writer.write(prefix + " " + lyrics + "\n");
     }
 
+    public int getLineNumber() {
+	return line.getLineNumber();
+    }
+
     private LyricsLine line; /// The line this syllable belongs to.
     private String prefix; /// Everything in the line before the actual lyrics.
     private String lyrics; /// The bit of lyrics in this syllable.

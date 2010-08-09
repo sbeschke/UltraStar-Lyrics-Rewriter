@@ -25,10 +25,11 @@ public class USLRAboutBox extends javax.swing.JDialog {
         super(parent);
         initComponents();
         getRootPane().setDefaultButton(closeButton);
+	jTextPane1.setCaretPosition(0);
     }
 
     @Action public void closeAboutBox() {
-        dispose();
+	dispose();
     }
 
     /** This method is called from within the constructor to
@@ -48,8 +49,9 @@ public class USLRAboutBox extends javax.swing.JDialog {
         javax.swing.JLabel homepageLabel = new javax.swing.JLabel();
         javax.swing.JLabel appHomepageLabel = new javax.swing.JLabel();
         javax.swing.JLabel appDescLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextPane1 = new javax.swing.JTextPane();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(uslr.USLRApp.class).getContext().getResourceMap(USLRAboutBox.class);
         setTitle(resourceMap.getString("title")); // NOI18N
         setModal(true);
@@ -88,13 +90,23 @@ public class USLRAboutBox extends javax.swing.JDialog {
         appDescLabel.setText(resourceMap.getString("appDescLabel.text")); // NOI18N
         appDescLabel.setName("appDescLabel"); // NOI18N
 
+        jScrollPane1.setFont(jScrollPane1.getFont().deriveFont(jScrollPane1.getFont().getSize()-2f));
+        jScrollPane1.setName("jScrollPane1"); // NOI18N
+
+        jTextPane1.setEditable(false);
+        jTextPane1.setFont(jTextPane1.getFont().deriveFont(jTextPane1.getFont().getSize()-2f));
+        jTextPane1.setText(resourceMap.getString("jTextPane1.text")); // NOI18N
+        jTextPane1.setName("jTextPane1"); // NOI18N
+        jScrollPane1.setViewportView(jTextPane1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(versionLabel)
@@ -106,7 +118,7 @@ public class USLRAboutBox extends javax.swing.JDialog {
                             .addComponent(appVendorLabel)
                             .addComponent(appHomepageLabel)))
                     .addComponent(appTitleLabel, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(appDescLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
+                    .addComponent(appDescLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
                     .addComponent(closeButton))
                 .addContainerGap())
         );
@@ -129,7 +141,9 @@ public class USLRAboutBox extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(homepageLabel)
                     .addComponent(appHomepageLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(closeButton)
                 .addContainerGap())
         );
@@ -139,6 +153,8 @@ public class USLRAboutBox extends javax.swing.JDialog {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton closeButton;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextPane jTextPane1;
     // End of variables declaration//GEN-END:variables
     
 }

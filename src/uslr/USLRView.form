@@ -15,7 +15,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jTabbedPane1" alignment="1" pref="351" max="32767" attributes="0"/>
+              <Component id="jTabbedPane1" alignment="1" pref="357" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -43,28 +43,26 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jScrollPane2" alignment="1" max="32767" attributes="0"/>
+                              <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
-                                  <Component id="prevSyllableButton" min="-2" pref="56" max="-2" attributes="0"/>
+                                  <Component id="prevSyllableButton" min="-2" pref="44" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="editLyricsField" min="-2" pref="122" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="nextSyllableButton" min="-2" pref="54" max="-2" attributes="0"/>
+                                  <Component id="nextSyllableButton" min="-2" pref="44" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jButton1" min="-2" pref="45" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="currentLineNumberLabel" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="newLyricsScrollPane" alignment="0" pref="445" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
+                                  <Component id="getCharButton" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="newLyricsScrollPane" alignment="0" pref="445" max="32767" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="getCharButton" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="skipCharButton" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="skipCharButton" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -75,22 +73,25 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane2" min="-2" pref="55" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="editLyricsField" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="prevSyllableButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="nextSyllableButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="jScrollPane2" min="-2" pref="35" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="currentLineNumberLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="prevSyllableButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="editLyricsField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="nextSyllableButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="getCharButton" min="-2" max="-2" attributes="0"/>
                               <Component id="skipCharButton" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="newLyricsScrollPane" pref="153" max="32767" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="newLyricsScrollPane" pref="144" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -98,6 +99,11 @@
               <SubComponents>
                 <Component class="javax.swing.JTextField" name="editLyricsField">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.modules.form.editors2.FontEditor">
+                      <FontInfo relative="true">
+                        <Font component="editLyricsField" property="font" relativeSize="true" size="3"/>
+                      </FontInfo>
+                    </Property>
                     <Property name="text" type="java.lang.String" resourceKey="editLyricsField.text"/>
                     <Property name="name" type="java.lang.String" value="editLyricsField" noResource="true"/>
                   </Properties>
@@ -174,6 +180,11 @@
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane2">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.modules.form.editors2.FontEditor">
+                      <FontInfo relative="true">
+                        <Font component="jScrollPane2" property="font" relativeSize="true" size="0"/>
+                      </FontInfo>
+                    </Property>
                     <Property name="name" type="java.lang.String" value="jScrollPane2" noResource="true"/>
                   </Properties>
                   <AuxValues>
@@ -188,11 +199,28 @@
                         <Property name="editorKit" type="javax.swing.text.EditorKit" editor="org.netbeans.modules.form.ComponentChooserEditor">
                           <ComponentRef name="null"/>
                         </Property>
+                        <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.modules.form.editors2.FontEditor">
+                          <FontInfo relative="true">
+                            <Font component="currentLineField" property="font" relativeSize="true" size="3"/>
+                          </FontInfo>
+                        </Property>
                         <Property name="name" type="java.lang.String" value="currentLineField" noResource="true"/>
                       </Properties>
                     </Component>
                   </SubComponents>
                 </Container>
+                <Component class="javax.swing.JLabel" name="jLabel1">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="jLabel1.text"/>
+                    <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="currentLineNumberLabel">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="currentLineNumberLabel.text"/>
+                    <Property name="name" type="java.lang.String" value="currentLineNumberLabel" noResource="true"/>
+                  </Properties>
+                </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="logPanel">
@@ -263,6 +291,9 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="uslr.USLRView" id="openSongAction" methodName="openSongAction"/>
                 </Property>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+O"/>
+                </Property>
                 <Property name="text" type="java.lang.String" resourceKey="openMenuItem.text"/>
                 <Property name="name" type="java.lang.String" value="openMenuItem" noResource="true"/>
               </Properties>
@@ -272,6 +303,9 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="uslr.USLRView" id="saveSongAction" methodName="saveSongAction"/>
                 </Property>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+S"/>
+                </Property>
                 <Property name="text" type="java.lang.String" resourceKey="jMenuItem1.text"/>
                 <Property name="name" type="java.lang.String" value="jMenuItem1" noResource="true"/>
               </Properties>
@@ -280,6 +314,9 @@
               <Properties>
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="org.jdesktop.application.Application" id="quit" methodName="quit"/>
+                </Property>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="null"/>
                 </Property>
                 <Property name="name" type="java.lang.String" value="exitMenuItem" noResource="true"/>
               </Properties>
@@ -344,9 +381,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="statusMessageLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="291" max="32767" attributes="0"/>
-                  <Component id="progressBar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace pref="453" max="32767" attributes="0"/>
                   <Component id="statusAnimationLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -359,7 +394,6 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="statusMessageLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="statusAnimationLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="progressBar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
               </Group>
@@ -376,11 +410,6 @@
           <Properties>
             <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="name" type="java.lang.String" value="statusAnimationLabel" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JProgressBar" name="progressBar">
-          <Properties>
-            <Property name="name" type="java.lang.String" value="progressBar" noResource="true"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -407,6 +436,6 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,1,-97,0,0,1,-35"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,1,-125,0,0,1,-35"/>
   </AuxValues>
 </Form>

@@ -81,7 +81,7 @@ public class Song {
         Pattern metadataPattern = Pattern.compile("^#(.+):(.*)$");
         // Regex to separate a line in the input file into prefix and lyrics
         Pattern syllablePattern = Pattern.compile("(^. -?\\d+ -?\\d+ -?\\d+)( (.*))?$");
-        LyricsLine currentLine = new LyricsLine();
+        LyricsLine currentLine = new LyricsLine(this);
 
         int lineNumber = 1;
         String syllStr = reader.readLine();
@@ -105,7 +105,7 @@ public class Song {
                 case '-': // line break
                     currentLine.setLineBreakMarker(syllStr);
                     this.addLine(currentLine);
-                    currentLine = new LyricsLine();
+                    currentLine = new LyricsLine(this);
                     break;
                 case ':': // regular syllable
                 case '*': // golden note
@@ -238,6 +238,14 @@ public class Song {
         else {
             return newsyl;
         }
+    }
+
+    public int getLineNumber(LyricsLine line) {
+	return lyrics.indexOf(line) + 1;
+    }
+
+    public int getLineCount() {
+	return lyrics.size();
     }
 
     public String getArtist() {

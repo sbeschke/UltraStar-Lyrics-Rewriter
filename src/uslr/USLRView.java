@@ -27,13 +27,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.nio.charset.Charset;
 import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.JDialog;
@@ -68,13 +64,11 @@ public class USLRView extends FrameView {
                         e.consume();
                         break;
                     // Previous syllable
-                    case KeyEvent.VK_A:
                     case KeyEvent.VK_LEFT:
                         view.lyricsPanePreviousSyllable();
                         e.consume();
                         break;
                     // Next syllable
-                    case KeyEvent.VK_S:
                     case KeyEvent.VK_RIGHT:
                         view.lyricsPaneNextSyllable();
                         e.consume();
@@ -109,63 +103,10 @@ public class USLRView extends FrameView {
 
         initComponents();
 
-        // status bar initialization - message timeout, idle icon and busy animation, etc
-        ResourceMap resourceMap = getResourceMap();
-        int messageTimeout = resourceMap.getInteger("StatusBar.messageTimeout");
-        messageTimer = new Timer(messageTimeout, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                statusMessageLabel.setText("");
-            }
-        });
-        messageTimer.setRepeats(false);
-        int busyAnimationRate = resourceMap.getInteger("StatusBar.busyAnimationRate");
-        for (int i = 0; i < busyIcons.length; i++) {
-            busyIcons[i] = resourceMap.getIcon("StatusBar.busyIcons[" + i + "]");
-        }
-        busyIconTimer = new Timer(busyAnimationRate, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                busyIconIndex = (busyIconIndex + 1) % busyIcons.length;
-                statusAnimationLabel.setIcon(busyIcons[busyIconIndex]);
-            }
-        });
-        idleIcon = resourceMap.getIcon("StatusBar.idleIcon");
-        statusAnimationLabel.setIcon(idleIcon);
-        progressBar.setVisible(false);
-
-        // connecting action tasks to status bar via TaskMonitor
-        TaskMonitor taskMonitor = new TaskMonitor(getApplication().getContext());
-        taskMonitor.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                String propertyName = evt.getPropertyName();
-                if ("started".equals(propertyName)) {
-                    if (!busyIconTimer.isRunning()) {
-                        statusAnimationLabel.setIcon(busyIcons[0]);
-                        busyIconIndex = 0;
-                        busyIconTimer.start();
-                    }
-                    progressBar.setVisible(true);
-                    progressBar.setIndeterminate(true);
-                } else if ("done".equals(propertyName)) {
-                    busyIconTimer.stop();
-                    statusAnimationLabel.setIcon(idleIcon);
-                    progressBar.setVisible(false);
-                    progressBar.setValue(0);
-                } else if ("message".equals(propertyName)) {
-                    String text = (String)(evt.getNewValue());
-                    statusMessageLabel.setText((text == null) ? "" : text);
-                    messageTimer.restart();
-                } else if ("progress".equals(propertyName)) {
-                    int value = (Integer)(evt.getNewValue());
-                    progressBar.setVisible(true);
-                    progressBar.setIndeterminate(false);
-                    progressBar.setValue(value);
-                }
-            }
-        });
-
         editLyricsField.addKeyListener(new EditLyricsKeyListener(this));
 
         currentLineField.setEditorKit(new HTMLEditorKit());
+	currentLineNumberLabel.setText("");
     }
 
     @Action
@@ -200,6 +141,8 @@ public class USLRView extends FrameView {
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         currentLineField = new javax.swing.JEditorPane();
+        jLabel1 = new javax.swing.JLabel();
+        currentLineNumberLabel = new javax.swing.JLabel();
         logPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         logTextArea = new javax.swing.JTextArea();
@@ -215,7 +158,6 @@ public class USLRView extends FrameView {
         statusPanel = new javax.swing.JPanel();
         statusMessageLabel = new javax.swing.JLabel();
         statusAnimationLabel = new javax.swing.JLabel();
-        progressBar = new javax.swing.JProgressBar();
 
         mainPanel.setName("mainPanel"); // NOI18N
 
@@ -223,6 +165,7 @@ public class USLRView extends FrameView {
 
         lyricsPanel.setName("lyricsPanel"); // NOI18N
 
+        editLyricsField.setFont(editLyricsField.getFont().deriveFont(editLyricsField.getFont().getSize()+3f));
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(uslr.USLRApp.class).getContext().getResourceMap(USLRView.class);
         editLyricsField.setText(resourceMap.getString("editLyricsField.text")); // NOI18N
         editLyricsField.setName("editLyricsField"); // NOI18N
@@ -257,57 +200,68 @@ public class USLRView extends FrameView {
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
 
+        jScrollPane2.setFont(jScrollPane2.getFont());
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
         currentLineField.setEditable(false);
         currentLineField.setEditorKit(null);
+        currentLineField.setFont(currentLineField.getFont().deriveFont(currentLineField.getFont().getSize()+3f));
         currentLineField.setName("currentLineField"); // NOI18N
         jScrollPane2.setViewportView(currentLineField);
+
+        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
+        jLabel1.setName("jLabel1"); // NOI18N
+
+        currentLineNumberLabel.setText(resourceMap.getString("currentLineNumberLabel.text")); // NOI18N
+        currentLineNumberLabel.setName("currentLineNumberLabel"); // NOI18N
 
         javax.swing.GroupLayout lyricsPanelLayout = new javax.swing.GroupLayout(lyricsPanel);
         lyricsPanel.setLayout(lyricsPanelLayout);
         lyricsPanelLayout.setHorizontalGroup(
             lyricsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(lyricsPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(lyricsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
                     .addGroup(lyricsPanelLayout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(prevSyllableButton, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(prevSyllableButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(editLyricsField, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nextSyllableButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nextSyllableButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(currentLineNumberLabel))
+                    .addComponent(newLyricsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
                     .addGroup(lyricsPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(lyricsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(newLyricsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
-                            .addGroup(lyricsPanelLayout.createSequentialGroup()
-                                .addComponent(getCharButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(skipCharButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE))))
+                        .addComponent(getCharButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(skipCharButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         lyricsPanelLayout.setVerticalGroup(
             lyricsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(lyricsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addGroup(lyricsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(editLyricsField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(prevSyllableButton)
-                    .addComponent(nextSyllableButton)
-                    .addComponent(jButton1))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(lyricsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(currentLineNumberLabel)
+                    .addComponent(prevSyllableButton)
+                    .addComponent(jButton1)
+                    .addComponent(editLyricsField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nextSyllableButton))
+                .addGap(18, 18, 18)
                 .addGroup(lyricsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(getCharButton)
                     .addComponent(skipCharButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(newLyricsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(newLyricsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                .addGap(26, 26, 26))
         );
 
         jTabbedPane1.addTab(resourceMap.getString("lyricsPanel.TabConstraints.tabTitle"), lyricsPanel); // NOI18N
@@ -334,7 +288,7 @@ public class USLRView extends FrameView {
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
         );
 
         menuBar.setName("menuBar"); // NOI18N
@@ -343,16 +297,19 @@ public class USLRView extends FrameView {
         fileMenu.setName("fileMenu"); // NOI18N
 
         openMenuItem.setAction(actionMap.get("openSongAction")); // NOI18N
+        openMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         openMenuItem.setText(resourceMap.getString("openMenuItem.text")); // NOI18N
         openMenuItem.setName("openMenuItem"); // NOI18N
         fileMenu.add(openMenuItem);
 
         jMenuItem1.setAction(actionMap.get("saveSongAction")); // NOI18N
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem1.setText(resourceMap.getString("jMenuItem1.text")); // NOI18N
         jMenuItem1.setName("jMenuItem1"); // NOI18N
         fileMenu.add(jMenuItem1);
 
         exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
+        exitMenuItem.setAccelerator(null);
         exitMenuItem.setName("exitMenuItem"); // NOI18N
         fileMenu.add(exitMenuItem);
 
@@ -384,8 +341,6 @@ public class USLRView extends FrameView {
         statusAnimationLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         statusAnimationLabel.setName("statusAnimationLabel"); // NOI18N
 
-        progressBar.setName("progressBar"); // NOI18N
-
         javax.swing.GroupLayout statusPanelLayout = new javax.swing.GroupLayout(statusPanel);
         statusPanel.setLayout(statusPanelLayout);
         statusPanelLayout.setHorizontalGroup(
@@ -393,9 +348,7 @@ public class USLRView extends FrameView {
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(statusMessageLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 291, Short.MAX_VALUE)
-                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 453, Short.MAX_VALUE)
                 .addComponent(statusAnimationLabel)
                 .addContainerGap())
         );
@@ -405,8 +358,7 @@ public class USLRView extends FrameView {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(statusMessageLabel)
-                    .addComponent(statusAnimationLabel)
-                    .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(statusAnimationLabel))
                 .addGap(11, 11, 11))
         );
 
@@ -439,6 +391,7 @@ public class USLRView extends FrameView {
     public void loadSong() throws Exception {
         loadedSong = new Song(loadedFile);
         setCurrentSyllable(loadedSong.getFirstSyllable());
+	updateCurrentLineNumber();
     }
 
     @Action
@@ -484,6 +437,7 @@ public class USLRView extends FrameView {
         editLyricsField.setText(syllable.getLyrics());
         editLyricsField.selectAll();
         editLyricsField.requestFocusInWindow();
+	updateCurrentLineNumber();
     }
 
     public void eraseSelectedText() {
@@ -610,12 +564,21 @@ public class USLRView extends FrameView {
         dialog.setVisible(true);
     }
 
+    private void updateCurrentLineNumber() {
+	currentLineNumberLabel.setText("Line "
+		+ Integer.toString(currentSyllable.getLineNumber())
+		+ " of " + Integer.toString(loadedSong.getLineCount()));
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem createSongListItem;
     private javax.swing.JEditorPane currentLineField;
+    private javax.swing.JLabel currentLineNumberLabel;
     private javax.swing.JTextField editLyricsField;
     private javax.swing.JButton getCharButton;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -630,19 +593,12 @@ public class USLRView extends FrameView {
     private javax.swing.JButton nextSyllableButton;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JButton prevSyllableButton;
-    private javax.swing.JProgressBar progressBar;
     private javax.swing.JButton skipCharButton;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
     private javax.swing.JMenu toolsMenu;
     // End of variables declaration//GEN-END:variables
-
-    private final Timer messageTimer;
-    private final Timer busyIconTimer;
-    private final Icon idleIcon;
-    private final Icon[] busyIcons = new Icon[15];
-    private int busyIconIndex = 0;
 
     private JDialog aboutBox;
 

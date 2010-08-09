@@ -44,12 +44,13 @@ public class SongListDialog extends java.awt.Dialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         songDirLabel = new javax.swing.JLabel();
         songDirField = new javax.swing.JTextField();
         chooseSongDirButton = new javax.swing.JButton();
-        outDirLabel = new javax.swing.JLabel();
-        outDirField = new javax.swing.JTextField();
         chooseOutDirButton = new javax.swing.JButton();
+        outDirField = new javax.swing.JTextField();
+        outDirLabel = new javax.swing.JLabel();
         createSongListButton = new javax.swing.JButton();
 
         setName("Form"); // NOI18N
@@ -60,6 +61,8 @@ public class SongListDialog extends java.awt.Dialog {
                 closeDialog(evt);
             }
         });
+
+        jPanel1.setName("jPanel1"); // NOI18N
 
         songDirLabel.setText(resourceMap.getString("songDirLabel.text")); // NOI18N
         songDirLabel.setName("songDirLabel"); // NOI18N
@@ -72,57 +75,67 @@ public class SongListDialog extends java.awt.Dialog {
         chooseSongDirButton.setText(resourceMap.getString("chooseSongDirButton.text")); // NOI18N
         chooseSongDirButton.setName("chooseSongDirButton"); // NOI18N
 
-        outDirLabel.setText(resourceMap.getString("outDirLabel.text")); // NOI18N
-        outDirLabel.setName("outDirLabel"); // NOI18N
-
-        outDirField.setName("outDirField"); // NOI18N
-
         chooseOutDirButton.setAction(actionMap.get("chooseOutDir")); // NOI18N
         chooseOutDirButton.setText(resourceMap.getString("chooseOutDirButton.text")); // NOI18N
         chooseOutDirButton.setName("chooseOutDirButton"); // NOI18N
+
+        outDirField.setName("outDirField"); // NOI18N
+
+        outDirLabel.setText(resourceMap.getString("outDirLabel.text")); // NOI18N
+        outDirLabel.setName("outDirLabel"); // NOI18N
 
         createSongListButton.setAction(actionMap.get("createSongList")); // NOI18N
         createSongListButton.setText(resourceMap.getString("createSongListButton.text")); // NOI18N
         createSongListButton.setName("createSongListButton"); // NOI18N
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(createSongListButton)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(outDirLabel)
                             .addComponent(songDirLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(songDirField)
-                            .addComponent(outDirField, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE))
+                            .addComponent(outDirField, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(chooseSongDirButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(chooseOutDirButton, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE))))
+                            .addComponent(chooseOutDirButton, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)))
+                    .addComponent(createSongListButton, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(songDirField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(chooseSongDirButton)
                     .addComponent(songDirLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(outDirLabel)
                     .addComponent(outDirField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(chooseOutDirButton))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(createSongListButton)
-                .addContainerGap())
+                .addGap(6, 6, 6))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -176,6 +189,7 @@ public class SongListDialog extends java.awt.Dialog {
     private javax.swing.JButton chooseOutDirButton;
     private javax.swing.JButton chooseSongDirButton;
     private javax.swing.JButton createSongListButton;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField outDirField;
     private javax.swing.JLabel outDirLabel;
     private javax.swing.JTextField songDirField;

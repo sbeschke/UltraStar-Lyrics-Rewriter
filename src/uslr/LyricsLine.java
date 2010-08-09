@@ -28,7 +28,8 @@ import java.util.Iterator;
  */
 public class LyricsLine {
 
-    public LyricsLine() {
+    public LyricsLine(Song song) {
+	this.song = song;
     }
 
     public void addSyllable(LyricsSyllable syllable) {
@@ -65,7 +66,6 @@ public class LyricsLine {
             }
             result += syl.getLyrics().length();
         }
-        System.out.println(result);
         return result;
     }
 
@@ -119,7 +119,12 @@ public class LyricsLine {
         }
         writer.write(lineBreakMarker + "\n");
     }
-    
+
+    public int getLineNumber() {
+	return song.getLineNumber(this);
+    }
+
+    private Song song;
     private ArrayList<LyricsSyllable> syllables = new ArrayList<LyricsSyllable>();
     private String lineBreakMarker = "";
 }
