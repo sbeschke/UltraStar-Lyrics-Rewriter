@@ -25,6 +25,10 @@ I will be able to attend to them.
 If you extend USLR and send me your patch, I will try to integrate it if it
 is of acceptable quality and credit you here.
 
+For bug reports, in addition to a detailed description of what went wrong,
+please include the contents of the <Log> tab at the time when the problem
+occured. If possible, also include the program's console output.
+
 USLR's central home page is:
 http://github.com/sbeschke/UltraStar-Lyrics-Rewriter
 
@@ -45,10 +49,10 @@ support for Unicode encoded files, using the UTF-8 encoding, enabling the
 creation and playback of songs in all languages of the world. However, this has
 made two problems obvious:
 
-  - There is a lack of song editing tools that can handle UTF-8 encoded files,
+  * There is a lack of song editing tools that can handle UTF-8 encoded files,
     forcing anyone wishing to create such songs to edit the .txt file by hand
     using a plain text editor, which is very cumbersome.
-  - Especially Asian song files have so far been - and will probably
+  * Especially Asian song files have so far been - and will probably
     continue to be - distributed in romanized script. Depending on the players'
     language skills, it may be desirable to display the lyrics in the original
     script. Therefore, a tool facilitating the job of going through the lyrics
@@ -63,6 +67,10 @@ NOTE. USLR saves lyrics using the UTF-8 encoding. This encoding is required to
 support non-latin scripts; however, it is currently (as of August 2010) only
 supported by UltraStar Deluxe. This means that the files you create using USLR
 will generally only play with UltraStar Deluxe, but not with UltraStar.
+
+NOTE. Although USLR won't save files in the ANSI encoding used by UltraStar and
+older versions of UltraStar Deluxe, it will happily load both UTF-8 and ANSI
+encoded files.
 
 2  HOW TO USE
 This section briefly details the usage of USLR. It is assumed that you know the
@@ -130,8 +138,64 @@ this by hand by opening the song .txt file using a text editor. Especially if
 you follow the above tip and keep two versions of the same song, you will want
 to edit their titles in order to be able to distinguish them.
 
+NOTE. If your file is not being opened or there are other problems, you should
+observe the contents of the <Log> tab. Any errors logged there may point you
+to a problem there may be with your song file. If you cannot find any problem
+with your file, you are welcome to contact me using the email address listed
+at the beginning of this file. It may well be a bug.
+
 2.3  Creating a song list
 USLR contains a very rudimentary way to create a song list from an UltraStar
-song collection.
+song collection. You can access it by selecting the <Create song list...>
+command from the <Tools> menu. You may then pick your songs directory, which
+normally is the "songs" subdirectory of you UltraStar Deluxe folder. You
+also need to pick a directory where USLR will save the generated list file.
 
-This list is in HTML format and can be formatted using
+Once you have picked both directories, start the list generation process by
+clicking the "Generate Song List" button. Depending on the size of your
+collection, USLR will then stop responding until it has finished generating the
+list. Once it starts responding again, you can find the list file in the
+output directory you indicated.
+
+WARNING. If there already is a list file in the output directory, it will be
+overwritten.
+
+This list is in HTML format and can be formatted using an external CSS file.
+Open the HTML file using a text editor and you can easily see what style classes
+you can use.
+
+NOTE. Check the <Log> tab to find out about any problems there may be with the
+songs in your collection. Songs that USLR cannot load because of problems
+will not appear in the generated list.
+
+3. FOR DEVELOPERS
+You can get USLR's source code at the github address indicated above.
+Unfortunately, the code is not well documented at the moment, but neither
+is it very complex, so you should not have a very difficult time adding or
+fixing things.
+
+The NetBeans IDE 6.8 has been used to create the code, and using NetBeans to
+work on the code will be the most convenient way, especially due to the
+integrated GUI editor.
+
+I'll be very happy to include your patches in future USLR versions.
+
+4. POSSIBLE FUTURE DEVELOPMENTS
+There is a number of features that would be very nice to have in USLR.
+However, future development of USLR is always subject to how much free time
+I have available, so it may take a long time until these features are
+implemented. You're welcome to work on any of these; just notify me as soon
+as you start working.
+
+  - An Undo feature would be extremely useful for editing lyrics.
+  - The list generation feature could be extended into something you can
+    actually call a "feature", instead of the dirty hack it is now. Ideas:
+    Select what columns to include; filter songs based on metadata via regex
+    conditions (e.g. to create separate lists by language); allow two-column
+    output (LaTeX? ODT?)
+  - Add metadata editor tab.
+  - The previous two could be combined into a more general song list manager
+    feature similar to UltraStar Manager, but with UTF-8 support.
+
+5. CONCLUSION
+Thank you for reading this README file. Enjoy UltraStar Lyrics Rewriter.

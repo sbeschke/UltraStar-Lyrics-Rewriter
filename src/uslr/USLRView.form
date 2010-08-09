@@ -15,7 +15,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jTabbedPane1" alignment="1" pref="347" max="32767" attributes="0"/>
+              <Component id="jTabbedPane1" alignment="1" pref="351" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -57,13 +57,13 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="newLyricsScrollPane" alignment="0" pref="441" max="32767" attributes="0"/>
+                                      <Component id="newLyricsScrollPane" alignment="0" pref="445" max="32767" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="getCharButton" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="skipCharButton" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="jScrollPane2" alignment="0" pref="441" max="32767" attributes="0"/>
+                                      <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -89,7 +89,7 @@
                               <Component id="skipCharButton" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="newLyricsScrollPane" pref="143" max="32767" attributes="0"/>
+                          <Component id="newLyricsScrollPane" pref="153" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
