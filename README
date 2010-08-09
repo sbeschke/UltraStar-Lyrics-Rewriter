@@ -1,6 +1,137 @@
-﻿UltraStar Lyrics Rewriter
-Unreleased development version
+UltraStar Lyrics Rewriter
+=========================
+Version 0.1
 
-This work-in-progress aims to be a rapid lyrics editor for UltraStar. The original motive behind its creation was the need to convert Korean songs with romanized lyrics to actual Korean script.
+README and USER MANUAL
 
-As this project fills a very small niche, features will be added only as I need them, or as they are requested.
+i  SUMMARY
+UltraStar Lyrics Rewriter (USLR) is a work-in-progress that aims to be a rapid
+lyrics editor for UltraStar songs.
+
+The original motive behind its creation was the need to convert Korean songs
+with romanized lyrics to actual Korean script.
+
+As this project fills a very small niche, features will be added only as I need
+them, or as they are requested.
+
+ii AUTHOR
+USLR has been created by Sebastian Beschke.
+
+I welcome all feedback. Please send it to s.beschke@gmx.de.
+
+I also accept feature requests, but I can make no guarantees as to whether/when
+I will be able to attend to them.
+
+If you extend USLR and send me your patch, I will try to integrate it if it
+is of acceptable quality and credit you here.
+
+USLR's central home page is:
+http://github.com/sbeschke/UltraStar-Lyrics-Rewriter
+
+Enjoy!
+
+iii LICENSE
+To do.
+
+1  INTRODUCTION
+There are several song editors for UltraStar to be found on the internet.
+However, most of them share the same fallacy as the original UltraStar software
+in that they only support the ANSI encoding used by legacy Windows software.
+This encoding is unable to represent any non-latin scripts, as is required
+e.g. for Asian languages.
+
+The famous UltraStar fork called UltraStar Deluxe has recently introduced
+support for Unicode encoded files, using the UTF-8 encoding, enabling the
+creation and playback of songs in all languages of the world. However, this has
+made two problems obvious:
+
+  - There is a lack of song editing tools that can handle UTF-8 encoded files,
+    forcing anyone wishing to create such songs to edit the .txt file by hand
+    using a plain text editor, which is very cumbersome.
+  - Especially Asian song files have so far been - and will probably
+    continue to be - distributed in romanized script. Depending on the players'
+    language skills, it may be desirable to display the lyrics in the original
+    script. Therefore, a tool facilitating the job of going through the lyrics
+    of a song and replacing romanized text by the original script may turn out
+    to be a big time saver.
+
+USLR has been created as a response to both problems. It does not aim to be
+a complete song editor; instead, its design focuses on streamlining the lyrics
+editing process.
+
+NOTE. USLR saves lyrics using the UTF-8 encoding. This encoding is required to
+support non-latin scripts; however, it is currently (as of August 2010) only
+supported by UltraStar Deluxe. This means that the files you create using USLR
+will generally only play with UltraStar Deluxe, but not with UltraStar.
+
+2  HOW TO USE
+This section briefly details the usage of USLR. It is assumed that you know the
+basics of UltraStar song organization and the structure of an UltraStar song
+.txt file. If you are not familiar with this, you should read the UltraStar
+Deluxe user manual and/or other web resources.
+
+2.1  Running USLR
+Download the most current version of USLR at the home page mentioned at the
+beginning of this file. This will be a file called something like USLR-x.x.jar,
+depending on the version. Run it by opening a text console and navigating to
+the directory where you saved USLR. Then type "java -jar USLR-x.x.jar",
+substituting for the file's actual name.
+
+2.2  Editing a song
+Load a song by selecting the <Open Song...> command from the <File> menu.
+(USLR is not able to create song files from scratch. You need, at the very
+least, a song file containing the pitches and timings, as well as some dummy
+lyrics.)
+
+The first line of the song will be displayed in the *line display* in the top
+half of the <Lyrics> tab. Also, the first syllable will appear highlighted in
+the *edit box* directly underneath it. This edit box is where you can make
+changes to the lyrics. Whatever is in the edit box will replace the syllable's
+original text as soon as you navigate to another syllable.
+
+You can move through the song by using CTRL in combination with the arrow keys:
+CTRL+Arrow Left and CTRL+Arrow Right move to the previous/next syllable, while
+CTRL+Arrow Up and CTRL+Arrow Down move to the first syllable of the
+previous/next line. (The cursor needs to be in the edit box in order for this
+to work.)
+
+Whenever you move to a new syllable, its text will automatically be selected
+in the edit box. This allows you to simply start typing and what you type will
+replace the present text. Note that you need to add a space to seperate words
+from each other. This can be placed either at the end of the first or the
+beginning of the second word; both variants are displayed correctly by
+UltraStar Deluxe.
+
+NOTE. USLR currently lacks an Undo function. This is a possible feature for
+future versions that would greatly enhance usability; for the time being, you
+will just have to be careful editing your songs.
+
+An alternative to typing in the whole lyrics, especially when you are converting
+between romanization and script, is to find the song's lyrics on the internet
+and paste them into the *paste box* at the bottom of the <Lyrics> pane. Then you
+can use the shortcut CTRL+q to remove the first character from the paste box and
+insert it into the edit box. If there are any extra characters in your pasted
+lyrics, you can skip them using CTRL+w. (Again, these shortcuts only work if
+the cursor is in the edit box.) This way, you can go through a song's lyrics
+quite efficiently, getting the characters for a syllable from the paste box and
+then moving on to the next syllable. If a character is missing in your pasted
+lyrics, you can simply type it in.
+
+Finally, when you are finished editing your song, save it using the <Save as...>
+command from the <File> menu.
+
+TIP. If you would like to keep both a romanized and a non-latin version of a
+song, you can avoid duplicating files (which may take up a lot of space,
+especially if your song uses a video) by placing both .txt files alongside each
+other in the same directory.
+
+NOTE. USLR does not currently support metadata editing. You will have to do
+this by hand by opening the song .txt file using a text editor. Especially if
+you follow the above tip and keep two versions of the same song, you will want
+to edit their titles in order to be able to distinguish them.
+
+2.3  Creating a song list
+USLR contains a very rudimentary way to create a song list from an UltraStar
+song collection.
+
+This list is in HTML format and can be formatted using
